@@ -1,0 +1,54 @@
+---
+import Particles from './Particles.jsx';
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+  <div
+    class="absolute inset-0 bg-gradient-to-br from-[#0a0a1a] via-[#0d0d2b] to-[#1a0a2e] animate-gradient-sweep bg-[length:200%_200%]"
+  />
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,212,255,0.08)_0%,transparent_70%)]" />
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(167,139,250,0.06)_0%,transparent_60%)]" />
+  <Particles client:only="preact" />
+
+  <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+    <div class="glass-strong inline-block px-4 py-1.5 mb-8 text-xs font-medium text-accent-cyan tracking-widest uppercase">
+      Arch Linux &bull; Hyprland
+    </div>
+
+    <h1 class="text-6xl md:text-8xl font-extrabold mb-4 tracking-tight">
+      <span class="gradient-text">HyprSpaceOS</span>
+    </h1>
+
+    <p class="text-2xl md:text-3xl text-text-secondary font-light mb-4">
+      Smooth. Sharp. Spacious.
+    </p>
+
+    <p class="text-text-secondary/60 text-lg mb-10 max-w-xl mx-auto">
+      An elegant Arch Linux experience powered by Hyprland.
+      Minimalist by design, limitless by choice.
+    </p>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a
+        href={`${base}downloads`}
+        class="accent-gradient-bg text-white px-8 py-3.5 rounded-full text-base font-semibold hover:opacity-90 transition-opacity shadow-lg shadow-accent-cyan/20"
+      >
+        Download Now
+      </a>
+      <a
+        href={`${base}features`}
+        class="glass text-text-primary px-8 py-3.5 rounded-full text-base font-medium hover:bg-[rgba(255,255,255,0.08)] transition-all"
+      >
+        Explore Features
+      </a>
+    </div>
+  </div>
+
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-text-secondary/40">
+      <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
+    </svg>
+  </div>
+</section>

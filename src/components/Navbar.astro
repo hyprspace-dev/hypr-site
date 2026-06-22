@@ -1,0 +1,39 @@
+---
+import MobileMenu from './MobileMenu.jsx';
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+
+const links = [
+  { href: `${base}features`, label: 'Features' },
+  { href: `${base}downloads`, label: 'Downloads' },
+  { href: `${base}gallery`, label: 'Gallery' },
+  { href: `${base}docs`, label: 'Docs' },
+];
+---
+
+<nav class="fixed top-0 left-0 right-0 z-50 glass rounded-none border-x-0 border-t-0">
+  <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href={base} class="text-xl font-bold gradient-text tracking-tight">
+      HyprSpaceOS
+    </a>
+
+    <div class="hidden md:flex items-center gap-8">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          class="text-text-secondary hover:text-text-primary transition-colors text-sm font-medium"
+        >
+          {link.label}
+        </a>
+      ))}
+      <a
+        href={`${base}downloads`}
+        class="accent-gradient-bg text-white px-4 py-2 rounded-full text-sm font-semibold hover:opacity-90 transition-opacity"
+      >
+        Download
+      </a>
+    </div>
+
+    <MobileMenu links={links} base={base} client:load />
+  </div>
+</nav>

@@ -1,0 +1,249 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GlassCard from '../components/GlassCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Reveal from '../components/Reveal.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+
+const featureList = [
+  {
+    category: 'Desktop Environment',
+    items: [
+      { title: 'Hyprland Compositor', desc: 'Dynamic tiling Wayland compositor with smooth animations, blur, rounded corners, and unparalleled customization.', icon: 'M4 6h16M4 12h16M4 18h16' },
+      { title: 'Waybar', desc: 'Highly customizable status bar with workspaces, system tray, clock, and resource monitors.', icon: 'M3 3h18v18H3z' },
+      { title: 'Rofi Launcher', desc: 'Fast application launcher with fuzzy search, custom themes, and clipboard manager integration.', icon: 'M10 3h4v18h-4z' },
+      { title: 'Dunst Notifications', desc: 'Lightweight notification daemon with custom styling, history, and do-not-disturb mode.', icon: 'M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9' },
+    ],
+  },
+  {
+    category: 'Performance & Base',
+    items: [
+      { title: 'Arch Linux Foundation', desc: 'Rolling release, bleeding-edge packages, and access to the AUR for virtually any software.', icon: 'M12 2L2 7l10 5 10-5-10-5z' },
+      { title: 'Optimized Kernel', desc: 'Pre-tuned Linux kernel with scheduler improvements and low-latency patches for desktop responsiveness.', icon: 'M20 12H4m16 0a8 8 0 01-8 8m8-8a8 8 0 00-8-8' },
+      { title: 'ZRAM & Swap', desc: 'Pre-configured ZRAM for compressed memory swapping, significantly reducing disk I/O.', icon: 'M12 20V10m0 0l-4 4m4-4l4 4' },
+      { title: 'Fast Boot', desc: 'Optimized boot sequence using systemd-boot with minimal initramfs. Boot to desktop in under 5 seconds on SSD.', icon: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z' },
+    ],
+  },
+  {
+    category: 'Visual & Experience',
+    items: [
+      { title: 'Glassmorphism Theme', desc: 'System-wide transparent blur effects, frosted glass panels, and a cohesive dark color scheme.', icon: 'M12 2a10 10 0 110 20 10 10 0 010-20z' },
+      { title: 'Animated Wallpapers', desc: 'Live gradient wallpapers with smooth transitions, or use your own static images with blur overlays.', icon: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14' },
+      { title: 'Custom Cursor & Icons', desc: 'Coherent icon theme and animated cursor set matching the HyprSpaceOS visual identity.', icon: 'M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z' },
+      { title: 'Smooth Animations', desc: '60fps+ animations for window management, workspace switching, and UI transitions via Hyprland config.', icon: 'M5 12h14M12 5l7 7-7 7' },
+    ],
+  },
+];
+
+const comparisons = [
+  { aspect: 'Base', hyprspace: 'Arch Linux', arch: 'Arch Linux', endeavouros: 'Arch Linux', garuda: 'Arch Linux' },
+  { aspect: 'Default Desktop', hyprspace: 'Hyprland', arch: 'None (DIY)', endeavouros: 'Xfce / KDE / i3', garuda: 'KDE Plasma (custom)' },
+  { aspect: 'Compositor', hyprspace: 'Hyprland (pre-tuned)', arch: 'Choose your own', endeavouros: 'Varies by edition', garuda: 'KWin' },
+  { aspect: 'AUR Access', hyprspace: 'Yes (yay pre-installed)', arch: 'Manual setup', endeavouros: 'Yes (yay)', garuda: 'Yes (Chaotic-AUR)' },
+  { aspect: 'Installer', hyprspace: 'Calamares (custom)', arch: 'archinstall CLI', endeavouros: 'Calamares', garuda: 'Calamares' },
+  { aspect: 'Btrfs Snapshots', hyprspace: 'Pre-configured', arch: 'Manual setup', endeavouros: 'Optional', garuda: 'Yes' },
+  { aspect: 'Theming', hyprspace: 'Glassmorphism dark', arch: 'None (stock)', endeavouros: 'Minimal', garuda: 'Heavy theme' },
+  { aspect: 'Boot Time (SSD)', hyprspace: '<5s', arch: 'Varies (~5-8s)', endeavouros: '~6-8s', garuda: '~8-12s' },
+  { aspect: 'ISO Size', hyprspace: '3.2 GB (Full)', arch: '~800 MB', endeavouros: '~2.5 GB', garuda: '~3.5 GB' },
+];
+
+const specs = [
+  { label: 'Kernel', value: 'Linux 6.14 LTS (latest stable)' },
+  { label: 'Compositor', value: 'Hyprland 0.48.x' },
+  { label: 'Display Server', value: 'Wayland (no X11 fallback)' },
+  { label: 'Init System', value: 'systemd' },
+  { label: 'Bootloader', value: 'systemd-boot' },
+  { label: 'Filesystem', value: 'Btrfs with compression + snapshots' },
+  { label: 'Package Manager', value: 'pacman + yay (AUR helper)' },
+  { label: 'Default Shell', value: 'Zsh with powerlevel10k' },
+  { label: 'Terminal Emulator', value: 'Kitty' },
+  { label: 'Status Bar', value: 'Waybar (custom config)' },
+  { label: 'App Launcher', value: 'Rofi (fuzzy search)' },
+  { label: 'Notification Daemon', value: 'Dunst' },
+  { label: 'Wallpaper Utility', value: 'swww (animated transitions)' },
+  { label: 'Clipboard', value: 'wl-clipboard + cliphist' },
+  { label: 'Screenshot', value: 'grim + slurp + swappy' },
+];
+
+const screenshots = [
+  { label: 'Clean Desktop', gradient: 'from-cyan-900/40 via-purple-900/20 to-bg-dark', icon: 'M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z' },
+  { label: 'Tiling Layout', gradient: 'from-purple-900/40 via-cyan-900/20 to-bg-dark', icon: 'M4 5h16v4H4zm0 8h16v6H4z' },
+  { label: 'Blur & Glass', gradient: 'from-bg-dark via-cyan-900/30 to-purple-900/30', icon: 'M12 2a10 10 0 110 20 10 10 0 010-20z' },
+];
+
+const categoryScreenshots = {
+  'Desktop Environment': 0,
+  'Performance & Base': 1,
+  'Visual & Experience': 2,
+};
+---
+
+<BaseLayout title="Features" description="Discover what makes HyprSpaceOS unique — performance, aesthetics, and complete control.">
+  <!-- Hero -->
+  <section class="relative pt-32 pb-16 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-[#0a0a1a] via-[#0d0d2b] to-[#1a0a2e] animate-gradient-sweep bg-[length:200%_200%]" />
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,212,255,0.06)_0%,transparent_60%)]" />
+    <div class="relative z-10 max-w-6xl mx-auto px-6">
+      <Reveal>
+        <div class="glass-strong inline-block px-4 py-1.5 mb-6 text-xs font-medium text-accent-cyan tracking-widest uppercase">
+          Everything Included
+        </div>
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-4 tracking-tight">
+          <span class="gradient-text">Features</span>
+        </h1>
+        <p class="text-text-secondary/60 text-lg md:text-xl max-w-2xl">
+          Every component carefully selected and configured. Nothing wasted, nothing missing.
+          <span class="block mt-2 text-text-secondary/40">From the kernel to the cursor, every pixel has a purpose.</span>
+        </p>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- Feature Categories with Screenshots -->
+  <section class="py-16 px-6">
+    <div class="max-w-6xl mx-auto">
+      {featureList.map((group, gi) => {
+        const ss = screenshots[categoryScreenshots[group.category]];
+        return (
+          <Reveal>
+            <div class="mb-24 last:mb-0">
+              <div class="grid lg:grid-cols-5 gap-8 items-start">
+                <div class={`lg:col-span-3 ${gi % 2 === 1 ? 'lg:order-2' : ''}`}>
+                  <h3 class="text-2xl font-bold mb-2 gradient-text inline-block">{group.category}</h3>
+                  <div class="w-16 h-0.5 accent-gradient-bg rounded-full mb-8" />
+                  <div class="grid md:grid-cols-2 gap-4">
+                    {group.items.map((item) => (
+                      <Reveal delay={100}>
+                        <GlassCard>
+                          <div class="flex items-start gap-3">
+                            <div class="shrink-0 w-9 h-9 glass rounded-xl flex items-center justify-center">
+                              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-accent-cyan">
+                                <path d={item.icon} />
+                              </svg>
+                            </div>
+                            <div>
+                              <h4 class="text-base font-semibold mb-1 text-text-primary">{item.title}</h4>
+                              <p class="text-text-secondary text-xs leading-relaxed">{item.desc}</p>
+                            </div>
+                          </div>
+                        </GlassCard>
+                      </Reveal>
+                    ))}
+                  </div>
+                </div>
+                <div class={`lg:col-span-2 ${gi % 2 === 1 ? 'lg:order-1' : ''}`}>
+                  <Reveal delay={200}>
+                    <div class={`glass overflow-hidden rounded-xl bg-gradient-to-br ${ss.gradient} aspect-[4/3] flex items-center justify-center`}>
+                      <div class="text-center p-6">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-text-secondary/30 mx-auto mb-3">
+                          <path d={ss.icon} />
+                        </svg>
+                        <p class="text-text-secondary/60 text-sm font-medium">{ss.label}</p>
+                        <p class="text-text-secondary/30 text-xs mt-1">Screenshot placeholder</p>
+                      </div>
+                    </div>
+                  </Reveal>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- Technical Specs -->
+  <section class="py-24 px-6 relative">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,212,255,0.03)_0%,transparent_60%)]" />
+    <div class="max-w-6xl mx-auto relative z-10">
+      <Reveal>
+        <SectionHeading
+          title="Technical Specs"
+          subtitle="What's under the hood. Every version-numbered detail."
+        />
+      </Reveal>
+
+      <Reveal delay={100}>
+        <div class="max-w-3xl mx-auto">
+          <GlassCard hover={false}>
+            {specs.map((spec, i) => (
+              <div class={`flex items-center justify-between py-3 ${i < specs.length - 1 ? 'border-b border-glass-border' : ''}`}>
+                <span class="text-text-secondary text-sm">{spec.label}</span>
+                <span class="text-text-primary text-sm font-medium text-right font-mono">{spec.value}</span>
+              </div>
+            ))}
+          </GlassCard>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- Comparison Table -->
+  <section class="py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <Reveal>
+        <SectionHeading
+          title="How We Stack Up"
+          subtitle="Honest comparison against other Arch-based distributions."
+        />
+      </Reveal>
+
+      <Reveal delay={100}>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-glass-border">
+                <th class="text-left py-4 px-4 text-text-secondary font-medium">Aspect</th>
+                <th class="text-left py-4 px-4 text-accent-cyan font-semibold">HyprSpaceOS</th>
+                <th class="text-left py-4 px-4 text-text-secondary font-medium">Arch Linux</th>
+                <th class="text-left py-4 px-4 text-text-secondary font-medium">EndeavourOS</th>
+                <th class="text-left py-4 px-4 text-text-secondary font-medium">Garuda Linux</th>
+              </tr>
+            </thead>
+            <tbody>
+              {comparisons.map((row, i) => (
+                <tr class={`${i < comparisons.length - 1 ? 'border-b border-glass-border/50' : ''} hover:bg-white/[0.02] transition-colors`}>
+                  <td class="py-3 px-4 text-text-primary font-medium">{row.aspect}</td>
+                  <td class="py-3 px-4 text-text-primary">{row.hyprspace}</td>
+                  <td class="py-3 px-4 text-text-secondary">{row.arch}</td>
+                  <td class="py-3 px-4 text-text-secondary">{row.endevouros}</td>
+                  <td class="py-3 px-4 text-text-secondary">{row.garuda}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Reveal>
+
+      <Reveal delay={200}>
+        <div class="mt-8 text-center">
+          <p class="text-text-secondary/50 text-xs">
+            Comparisons based on latest stable releases as of June 2026. Your mileage may vary.
+          </p>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-24 px-6 relative">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(167,139,250,0.04)_0%,transparent_60%)]" />
+    <Reveal>
+      <div class="max-w-3xl mx-auto text-center relative z-10">
+        <h2 class="text-3xl md:text-5xl font-bold mb-6">
+          Convinced yet?
+        </h2>
+        <p class="text-text-secondary text-lg mb-10 max-w-lg mx-auto">
+          Download HyprSpaceOS and experience the difference. Free, open source, and built for you.
+        </p>
+        <a
+          href={`${base}downloads`}
+          class="accent-gradient-bg text-white px-8 py-3.5 rounded-full text-base font-semibold inline-block hover:opacity-90 transition-opacity shadow-lg shadow-accent-cyan/20"
+        >
+          Download Now
+        </a>
+      </div>
+    </Reveal>
+  </section>
+</BaseLayout>

@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import GlassCard from '../components/GlassCard.astro';
+import EditionTabs from '../components/EditionTabs.jsx';
+import Reveal from '../components/Reveal.astro';
+
+const requirements = [
+  { label: 'Processor', value: '64-bit x86-64 (Intel/AMD)' },
+  { label: 'Memory', value: '4 GB RAM (8 GB recommended)' },
+  { label: 'Storage', value: '20 GB free space' },
+  { label: 'GPU', value: 'GPU with Vulkan support (NVIDIA requires open-source driver)' },
+  { label: 'Display', value: '1080p or higher recommended' },
+];
+---
+
+<BaseLayout title="Downloads" description="Download HyprSpaceOS — choose your edition and get started.">
+  <section class="pt-32 pb-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <SectionHeading
+        title="Download HyprSpaceOS"
+        subtitle="Choose the edition that fits your workflow. All editions are free and open source."
+      />
+
+      <EditionTabs client:load />
+
+      <Reveal>
+        <div class="mt-24">
+          <h3 class="text-2xl font-bold mb-8 text-center">System Requirements</h3>
+          <div class="max-w-2xl mx-auto">
+            <GlassCard hover={false}>
+              {requirements.map((req) => (
+                <div class="flex items-center justify-between py-3 border-b border-glass-border last:border-0">
+                  <span class="text-text-secondary text-sm">{req.label}</span>
+                  <span class="text-text-primary text-sm font-medium text-right">{req.value}</span>
+                </div>
+              ))}
+            </GlassCard>
+          </div>
+        </div>
+      </Reveal>
+
+      <Reveal delay={100}>
+        <div class="mt-24 text-center">
+        <h3 class="text-2xl font-bold mb-4">Installation Guide</h3>
+        <p class="text-text-secondary mb-6 max-w-lg mx-auto">
+          New to HyprSpaceOS? Our wiki has detailed installation instructions and post-setup guides.
+        </p>
+        <a
+          href="https://wiki.hyprspaceos.org"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="glass text-text-primary px-6 py-3 rounded-full text-sm font-medium hover:bg-[rgba(255,255,255,0.08)] transition-all inline-block"
+        >
+          View Installation Guide →
+        </a>
+      </div>
+      </Reveal>
+    </div>
+  </section>
+</BaseLayout>

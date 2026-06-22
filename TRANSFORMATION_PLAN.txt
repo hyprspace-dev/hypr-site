@@ -1,0 +1,170 @@
+============================================================================
+  HyprSpaceOS Website — Full Transformation Plan
+  Goal: 100% better than archlinux.org, zero "AI-generated" look
+============================================================================
+
+PHASE 1 — LAYOUT OVERHAUL (break the grid)
+────────────────────────────────────────────
+
+1. Hero.astro — Two-column layout
+   - Left: gradient title + opinionated tagline + CTA buttons
+   - Right: TerminalDemo.jsx (side-by-side on desktop, stack on mobile)
+   - Add subtle scanline overlay (CSS pseudo-element repeating-linear-gradient)
+   - Glitch effect on title on hover (CSS keyframes, clip-path shift)
+   - Remove centered vertical stack pattern
+
+2. index.astro — Staggered asymmetric layout
+   - Replace 3-card grid with cards at alternating heights (mt-16, mt-0, mt-8)
+   - Add "Config Wall" full-bleed section between feature highlights:
+     A wide, dark, horizontally-scrollable window showing raw hyprland.conf
+     with syntax highlighting (use ConfigViewer.jsx component)
+   - Add "Speed Run" stat bar:
+     ┌─────────────────────────────────────────────┐
+     │ 4.2s boot  │ 486 MB idle  │ 2,700+ packages │
+     └─────────────────────────────────────────────┘
+     Three glass pills in a row with real measurements
+
+3. features.astro — Full-width showcases
+   - Replace 2x2 grids with single wide feature blocks:
+     ┌─── text ────┐  ┌─── screenshot ───┐
+     │ Title       │  │                  │
+     │ Description │  │   (image)        │
+     └─────────────┘  └──────────────────┘
+     then next row flips (image on left, text on right)
+   - Comparison table → full-bleed dark section with colored cell ticks/crosses
+   - Technical specs → visual timeline with dots and connector lines
+
+
+PHASE 2 — INTERACTIVE ELEMENTS
+────────────────────────────────
+
+4. ThemePicker.jsx (Preact island)
+   - Renders in the navbar as 4 color dots: ● ● ● ●
+   - Presets: Cyan (#00d4ff), Magenta (#f472b6), Green (#34d399), Gold (#fbbf24)
+   - Swaps CSS variable --accent on :root via document.documentElement.style
+   - Persists choice in localStorage so it survives page reloads
+   - Tailwind config must use CSS variables so swap propagates everywhere
+
+5. GitHubStats.jsx (Preact island)
+   - Fetches https://api.github.com/repos/YOUR_USERNAME/hyprspaceos
+   - Displays: ★ stars, ◔ forks, last commit date
+   - Renders as a subtle badge bar in the footer or hero
+   - Cache response in sessionStorage to avoid rate limiting
+
+6. ConfigViewer.jsx (Preact island)
+   - A horizontally-scrollable, syntax-highlighted window
+   - Shows 20-30 lines from a real hyprland.conf with line numbers
+   - Animated line-by-line reveal when scrolled into view
+   - Monospace font, dark background, green prompts
+   - Include actual configs: blur, animations, window rules, keybinds
+
+
+PHASE 3 — AUTHENTIC CONTENT
+─────────────────────────────
+
+7. Copy rewrite — replace ALL generic text with opinionated specificity:
+   - Describe real tuning effort ("64 layers of keyframe curves")
+   - Reference real version numbers, real package counts, real community
+   - Remove "An elegant Arch Linux experience" — be more specific
+   - Tagline alternatives: "Hyprland, perfected." / "Tuned to the pixel."
+   - Each feature description should reference a real config or measurement
+
+8. Stats — replace all placeholders with real numbers:
+   - Boot time (measure with systemd-analyze)
+   - Idle RAM usage (measure with free -h)
+   - Package count in repo
+   - Actual Hyprland version shipped
+   - Number of pre-configured keybinds, window rules, animation curves
+
+9. Screenshot integration — once .png/.jpg files exist:
+   - Place in public/screenshots/
+   - Named desktop-1.jpg through desktop-6.jpg (matches Lightbox.jsx)
+   - Replace placeholder gradient divs in features page with <img> tags
+   - Use Astro <Image /> for optimization with blur placeholder
+   - Each feature showcase gets its own relevant screenshot
+
+
+PHASE 4 — MICRO-POLISH
+────────────────────────
+
+10. global.css additions:
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #07070d; }
+    ::-webkit-scrollbar-thumb { background: #00d4ff33; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #00d4ff66; }
+
+    /* Selection color */
+    ::selection { background: rgba(0, 212, 255, 0.3); }
+
+    /* Focus ring */
+    *:focus-visible { outline: 2px solid #00d4ff; outline-offset: 2px; }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Scanline overlay utility */
+    .scanlines::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+    }
+
+11. Reveal.astro improvements:
+    - Add will-change: transform, opacity for GPU-accelerated animations
+    - Stagger children: each child in a list animates with delay = index * 100ms
+    - Respect prefers-reduced-motion
+
+
+IMPLEMENTATION ORDER
+─────────────────────
+
+  Step 1:  global.css — scrollbar, selection, focus, scanlines, reduced motion
+  Step 2:  ThemePicker.jsx — CSS variable swap component
+  Step 3:  GitHubStats.jsx — live stats fetch
+  Step 4:  ConfigViewer.jsx — animated hyprland.conf display
+  Step 5:  Hero.astro — two-column layout + scanline overlay
+  Step 6:  index.astro — staggered cards, stat bar, config wall section
+  Step 7:  features.astro — full-width showcases, timeline, visual comparison
+  Step 8:  Copy rewrite — every .astro file, every description
+  Step 9:  Screenshot integration — whenever images are ready
+
+
+FILES TO MODIFY / CREATE
+─────────────────────────
+
+  MODIFY:
+    src/styles/global.css
+    src/components/Hero.astro
+    src/components/Reveal.astro
+    src/components/Navbar.astro
+    src/pages/index.astro
+    src/pages/features.astro
+
+  CREATE:
+    src/components/ThemePicker.jsx
+    src/components/GitHubStats.jsx
+    src/components/ConfigViewer.jsx
+
+
+DESIGN NOTES
+─────────────
+
+  - No centered symmetric card grids. Everything should feel slightly offset.
+  - Full-bleed sections between content blocks for visual breathing room.
+  - Terminal aesthetic (monospace, green-on-black, blinking cursor) is a
+    recurring visual motif that ties the distro identity to the site.
+  - Real numbers beat marketing language every time.
+  - Interactive elements (theme picker, stats) build trust and show the
+    project is alive and maintained.
+  - Every placeholder/generic element is an opportunity for authenticity.

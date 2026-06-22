@@ -1,0 +1,12 @@
+---
+export interface Props {
+  class?: string;
+  hover?: boolean;
+}
+
+const { class: className, hover = true } = Astro.props;
+---
+
+<div class={`glass ${hover ? 'glass-hover' : ''} p-6 ${className ?? ''}`}>
+  <slot />
+</div>

@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GlassCard from '../components/GlassCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Reveal from '../components/Reveal.astro';
+
+const docCategories = [
+  {
+    title: 'Getting Started',
+    desc: 'Installation guide, first boot, and initial setup walkthrough.',
+    href: 'https://wiki.hyprspaceos.org/installation',
+    icon: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z',
+  },
+  {
+    title: 'Configuration',
+    desc: 'Customize Hyprland, Waybar, themes, keybinds, and more.',
+    href: 'https://wiki.hyprspaceos.org/configuration',
+    icon: 'M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17',
+  },
+  {
+    title: 'Package Management',
+    desc: 'Using pacman, AUR helpers, and managing your software.',
+    href: 'https://wiki.hyprspaceos.org/packages',
+    icon: 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4',
+  },
+  {
+    title: 'Troubleshooting',
+    desc: 'Common issues, fixes, and debugging tips for HyprSpaceOS.',
+    href: 'https://wiki.hyprspaceos.org/troubleshooting',
+    icon: 'M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+  },
+  {
+    title: 'Hyprland Deep Dive',
+    desc: 'Master Hyprland config, animations, window rules, and workspace management.',
+    href: 'https://wiki.hyprspaceos.org/hyprland',
+    icon: 'M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2-1v2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5',
+  },
+  {
+    title: 'Contributing',
+    desc: 'How to contribute to HyprSpaceOS development, packages, and documentation.',
+    href: 'https://wiki.hyprspaceos.org/contributing',
+    icon: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z',
+  },
+];
+---
+
+<BaseLayout title="Documentation" description="Guides, configuration, and resources for HyprSpaceOS.">
+  <section class="pt-32 pb-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <Reveal>
+        <SectionHeading
+          title="Documentation"
+          subtitle="Everything you need to get started and master HyprSpaceOS. Our full wiki is hosted externally."
+        />
+      </Reveal>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {docCategories.map((doc) => (
+          <Reveal>
+            <a href={doc.href} target="_blank" rel="noopener noreferrer" class="block group">
+            <GlassCard>
+              <div class="w-10 h-10 glass rounded-xl flex items-center justify-center mb-4">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-accent-cyan">
+                  <path d={doc.icon} />
+                </svg>
+              </div>
+              <h3 class="text-lg font-semibold mb-2 text-text-primary group-hover:text-accent-cyan transition-colors">
+                {doc.title} →
+              </h3>
+              <p class="text-text-secondary text-sm leading-relaxed">{doc.desc}</p>
+            </GlassCard>
+          </a>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

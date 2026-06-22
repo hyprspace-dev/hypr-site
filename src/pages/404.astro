@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+
+<BaseLayout title="404 — Not Found">
+  <section class="min-h-[80vh] flex items-center justify-center px-6">
+    <div class="text-center max-w-lg">
+      <div class="text-8xl font-extrabold gradient-text mb-4">404</div>
+      <h1 class="text-2xl font-bold mb-4 text-text-primary">Lost in space?</h1>
+      <p class="text-text-secondary mb-8">
+        This page doesn't exist. Maybe it drifted off into the void.
+      </p>
+      <a
+        href={base}
+        class="accent-gradient-bg text-white px-8 py-3.5 rounded-full text-base font-semibold inline-block hover:opacity-90 transition-opacity shadow-lg shadow-accent-cyan/20"
+      >
+        Return Home
+      </a>
+    </div>
+  </section>
+</BaseLayout>
