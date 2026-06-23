@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Reveal from '../components/Reveal.astro';
+import ConfigViewer from '../components/ConfigViewer.jsx';
+---
+
+<BaseLayout title="Config" description="HyprSpaceOS default configuration — every setting visible, nothing hidden.">
+  <section class="pt-32 pb-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <Reveal>
+        <SectionHeading
+          title="Configuration"
+          subtitle="No secrets. This is exactly what ships with HyprSpaceOS — every bezier, every bind, every blur pass."
+        />
+      </Reveal>
+
+      <Reveal delay={200}>
+        <div class="max-w-4xl mx-auto">
+          <ConfigViewer client:load />
+        </div>
+      </Reveal>
+
+      <Reveal delay={300}>
+        <div class="max-w-2xl mx-auto mt-16 text-center">
+          <p class="text-text-secondary/50 text-sm leading-relaxed">
+            This config lives at <code class="text-accent font-mono text-xs">~/.config/hypr/hyprland.conf</code> on your system.
+            Everything is editable. Nothing is locked.
+          </p>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+</BaseLayout>

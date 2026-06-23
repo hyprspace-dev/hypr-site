@@ -1,11 +1,11 @@
 ---
 import MobileMenu from './MobileMenu.jsx';
-import ThemePicker from './ThemePicker.jsx';
 
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 
 const links = [
   { href: `${base}features`, label: 'Features' },
+  { href: `${base}config`, label: 'Config' },
   { href: `${base}downloads`, label: 'Downloads' },
   { href: `${base}gallery`, label: 'Gallery' },
   { href: `${base}docs`, label: 'Docs' },
@@ -27,8 +27,6 @@ const links = [
           {link.label}
         </a>
       ))}
-      <div class="w-px h-6 bg-glass-border" />
-      <ThemePicker client:load />
       <a
         href={`${base}downloads`}
         class="accent-gradient-bg text-white px-4 py-2 rounded-full text-sm font-semibold hover:opacity-90 transition-opacity"
@@ -37,9 +35,6 @@ const links = [
       </a>
     </div>
 
-    <div class="flex md:hidden items-center gap-3">
-      <ThemePicker client:load />
-      <MobileMenu links={links} base={base} client:load />
-    </div>
+    <MobileMenu links={links} base={base} client:load />
   </div>
 </nav>
