@@ -1,6 +1,9 @@
 import { defineConfig } from 'astro/config';
+import tailwind from '@astrojs/tailwind';
+import preact from '@astrojs/preact';
 
 export default defineConfig({
-  site: 'https://github.com/hyprspace-dev',
-  base: '/hypr-site', // Delete this line if your repository is named "your-username.github.io"
+  integrations: [tailwind(), preact()],
+  site: 'https://hyprspace-dev.github.io',
+  base: '/hypr-site',
 });
