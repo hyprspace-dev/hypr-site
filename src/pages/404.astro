@@ -1,23 +1,67 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import GlassCard from '../components/GlassCard.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+
+const suggestions = [
+  { title: 'Home', href: base, desc: 'Back to the beginning' },
+  { title: 'Features', href: `${base}features`, desc: 'Explore what makes us different' },
+  { title: 'Downloads', href: `${base}downloads`, desc: 'Get HyprSpaceOS' },
+  { title: 'About', href: `${base}about`, desc: 'Learn our story' },
+];
 ---
 
-<BaseLayout title="404 — Not Found">
-  <section class="min-h-[80vh] flex items-center justify-center px-6">
-    <div class="text-center max-w-lg">
-      <div class="text-8xl font-extrabold gradient-text mb-4">404</div>
-      <h1 class="text-2xl font-bold mb-4 text-text-primary">Lost in space?</h1>
-      <p class="text-text-secondary mb-8">
-        This page doesn't exist. Maybe it drifted off into the void.
-      </p>
-      <a
-        href={base}
-        class="accent-gradient-bg text-white px-8 py-3.5 rounded-full text-base font-semibold inline-block hover:opacity-90 transition-opacity shadow-lg shadow-accent-cyan/20"
-      >
-        Return Home
-      </a>
+<BaseLayout title="404 — Not Found" description="Page not found. Let's get you back on track.">
+  <section class="min-h-[80vh] flex items-center justify-center px-6 py-20">
+    <div class="max-w-2xl w-full">
+      <!-- 404 Header -->
+      <div class="text-center mb-16">
+        <div class="inline-block mb-4">
+          <div class="text-8xl font-extrabold gradient-text mb-2">404</div>
+        </div>
+        <h1 class="text-4xl font-bold mb-4 text-text-primary">Lost in the void?</h1>
+        <p class="text-lg text-text-secondary mb-8 max-w-md mx-auto">
+          This page doesn't exist. Maybe it drifted off into space during a window animation.
+        </p>
+      </div>
+
+      <!-- Navigation Suggestions -->
+      <div class="mb-12">
+        <p class="text-text-secondary text-sm font-semibold mb-6 text-center">Where would you like to go?</p>
+        <div class="grid md:grid-cols-2 gap-4">
+          {suggestions.map((suggestion) => (
+            <a
+              href={suggestion.href}
+              class="group p-4 rounded-lg glass-hover transition-all focus:outline-2 focus:outline-offset-2"
+            >
+              <h3 class="font-semibold text-text-primary mb-1 group-hover:text-accent transition-colors">
+                {suggestion.title}
+              </h3>
+              <p class="text-sm text-text-secondary">{suggestion.desc}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Primary CTA -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a
+          href={base}
+          class="accent-gradient-bg text-white px-8 py-3.5 rounded-full text-base font-semibold inline-block hover:opacity-90 transition-opacity shadow-lg focus:outline-2 focus:outline-offset-2"
+          style="box-shadow: 0 0 24px hsl(var(--accent-h), var(--accent-s), var(--accent-l), 0.25);"
+        >
+          Return Home
+        </a>
+        <a
+          href="https://github.com/hyprspace-dev/hypr-site/issues"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="glass text-text-primary px-8 py-3.5 rounded-full text-base font-medium hover:bg-[rgba(255,255,255,0.08)] transition-all inline-block focus:outline-2 focus:outline-offset-2"
+        >
+          Report Issue
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>

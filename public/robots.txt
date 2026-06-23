@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+
+Sitemap: https://hyprspace-dev.github.io/hypr-site/sitemap.xml

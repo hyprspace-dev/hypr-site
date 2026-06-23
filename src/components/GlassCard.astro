@@ -2,11 +2,12 @@
 export interface Props {
   class?: string;
   hover?: boolean;
+  role?: string;
 }
 
-const { class: className, hover = true } = Astro.props;
+const { class: className, hover = true, role = 'article' } = Astro.props;
 ---
 
-<div class={`glass ${hover ? 'glass-hover' : ''} p-6 ${className ?? ''}`}>
+<div class={`glass ${hover ? 'glass-hover' : ''} p-6 rounded-lg focus:outline-2 focus:outline-offset-2 transition-all ${className ?? ''}`} role={role}>
   <slot />
 </div>

@@ -1,57 +1,60 @@
 import { useState, useEffect } from 'preact/hooks';
 
-const themes = [
-  { name: 'Cyan', h: 190, s: 100, l: 50, h2: 260, s2: 80, l2: 60 },
-  { name: 'Magenta', h: 330, s: 80, l: 60, h2: 200, s2: 80, l2: 55 },
-  { name: 'Green', h: 160, s: 60, l: 55, h2: 190, s2: 80, l2: 50 },
-  { name: 'Gold', h: 40, s: 90, l: 55, h2: 330, s2: 70, l2: 55 },
-];
-
 export default function ThemePicker() {
-  const [open, setOpen] = useState(false);
-  const [active, setActive] = useState(0);
+  const [darkMode, setDarkMode] = useState(true);
 
   useEffect(() => {
-    const saved = localStorage.getItem('hyprspaceos-theme');
-    if (saved) {
-      const idx = themes.findIndex((t) => t.name === saved);
-      if (idx >= 0) applyTheme(idx);
+    const savedDarkMode = localStorage.getItem('hyprspaceos-dark-mode');
+
+    if (savedDarkMode !== null) {
+      const isDark = savedDarkMode === 'true';
+      setDarkMode(isDark);
+      applyDarkMode(isDark);
+    } else {
+      // Default to dark mode
+      setDarkMode(true);
+      applyDarkMode(true);
     }
   }, []);
 
-  function applyTheme(i) {
-    const t = themes[i];
-    document.documentElement.style.setProperty('--accent-h', t.h);
-    document.documentElement.style.setProperty('--accent-s', `${t.s}%`);
-    document.documentElement.style.setProperty('--accent-l', `${t.l}%`);
-    document.documentElement.style.setProperty('--accent-secondary-h', t.h2);
-    document.documentElement.style.setProperty('--accent-secondary-s', `${t.s2}%`);
-    document.documentElement.style.setProperty('--accent-secondary-l', `${t.l2}%`);
-    setActive(i);
-    localStorage.setItem('hyprspaceos-theme', t.name);
+  function applyDarkMode(isDark) {
+    if (isDark) {
+      document.documentElement.classList.remove('light-mode');
+    } else {
+      document.documentElement.classList.add('light-mode');
+    }
+    localStorage.setItem('hyprspaceos-dark-mode', isDark);
+    setDarkMode(isDark);
+  }
+
+  function toggleDarkMode() {
+    applyDarkMode(!darkMode);
   }
 
   return (
-    <div class="relative">
-      <button
-        onClick={() => setOpen(!open)}
-        class="w-6 h-6 rounded-full border-2 border-glass-border transition-transform hover:scale-110"
-        style={{ background: `hsl(${themes[active].h}, ${themes[active].s}%, ${themes[active].l}%)` }}
-        aria-label="Switch theme"
-      />
-      {open && (
-        <div class="absolute right-0 top-8 glass-strong p-2 flex gap-2 z-50">
-          {themes.map((t, i) => (
-            <button
-              key={t.name}
-              onClick={() => { applyTheme(i); setOpen(false); }}
-              class={`w-7 h-7 rounded-full transition-transform hover:scale-125 ${i === active ? 'ring-2 ring-white' : ''}`}
-              style={{ background: `hsl(${t.h}, ${t.s}%, ${t.l}%)` }}
-              aria-label={t.name}
-            />
-          ))}
-        </div>
+    <button
+      onClick={toggleDarkMode}
+      class="p-2 rounded-full glass-hover transition-all hover:bg-[rgba(255,255,255,0.08)] focus:outline-2 focus:outline-offset-2"
+      aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+      title={darkMode ? 'Light mode' : 'Dark mode'}
+    >
+      {darkMode ? (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5" />
+          <line x1="12" y1="1" x2="12" y2="3" />
+          <line x1="12" y1="21" x2="12" y2="23" />
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+          <line x1="1" y1="12" x2="3" y2="12" />
+          <line x1="21" y1="12" x2="23" y2="12" />
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </svg>
+      ) : (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
       )}
-    </div>
+    </button>
   );
 }

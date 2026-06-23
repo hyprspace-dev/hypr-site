@@ -14,6 +14,12 @@
     --accent-secondary-s: 80%;
     --accent-secondary-l: 60%;
     --accent-secondary: hsl(var(--accent-secondary-h), var(--accent-secondary-s), var(--accent-secondary-l));
+
+    /* Light mode colors */
+    --bg-light: #ffffff;
+    --bg-light-secondary: #f8f9fa;
+    --text-light: #1a1a1a;
+    --text-light-secondary: #666666;
   }
 
   html {
@@ -22,14 +28,43 @@
 
   body {
     @apply bg-bg-dark text-text-primary font-sans antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: #07070d; }
-  ::-webkit-scrollbar-thumb { background: hsl(var(--accent-h), var(--accent-s), var(--accent-l), 0.2); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--accent-h), var(--accent-s), var(--accent-l), 0.4); }
+  html.light-mode body {
+    @apply bg-white text-gray-900;
+  }
 
-  ::selection { background: hsl(var(--accent-h), var(--accent-s), var(--accent-l), 0.3); }
+  html.light-mode {
+    --bg-dark: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #666666;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #07070d;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--accent-h), var(--accent-s), var(--accent-l), 0.2);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--accent-h), var(--accent-s), var(--accent-l), 0.4);
+  }
+
+  html.light-mode ::-webkit-scrollbar-track {
+    background: #f0f0f0;
+  }
+
+  ::selection {
+    background: hsl(var(--accent-h), var(--accent-s), var(--accent-l), 0.3);
+  }
 
   *:focus-visible {
     outline: 2px solid hsl(var(--accent-h), var(--accent-s), var(--accent-l));
@@ -37,7 +72,10 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
+
+    *,
+    *::before,
+    *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
@@ -54,6 +92,11 @@
     border-radius: 16px;
   }
 
+  html.light-mode .glass {
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
   .glass-hover {
     transition: all 0.3s ease;
   }
@@ -65,12 +108,22 @@
     box-shadow: 0 8px 32px hsl(var(--accent-h), var(--accent-s), var(--accent-l), 0.1);
   }
 
+  html.light-mode .glass-hover:hover {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
   .glass-strong {
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(32px);
     -webkit-backdrop-filter: blur(32px);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 16px;
+  }
+
+  html.light-mode .glass-strong {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.1);
   }
 
   .gradient-text {
@@ -88,40 +141,95 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.06) 2px,
-      rgba(0, 0, 0, 0.06) 4px
-    );
+    background: repeating-linear-gradient(0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.06) 2px,
+        rgba(0, 0, 0, 0.06) 4px);
     pointer-events: none;
     z-index: 1;
   }
+}
 
-  @keyframes glitch {
-    0% { clip-path: inset(0 0 80% 0); transform: translate(-2px, 2px); }
-    10% { clip-path: inset(20% 0 60% 0); transform: translate(2px, -2px); }
-    20% { clip-path: inset(40% 0 40% 0); transform: translate(-1px, 1px); }
-    30% { clip-path: inset(60% 0 20% 0); transform: translate(1px, -1px); }
-    40% { clip-path: inset(80% 0 0 0); transform: translate(-2px, 2px); }
-    50% { clip-path: inset(0 0 80% 0); transform: translate(2px, -1px); }
-    60% { clip-path: inset(20% 0 60% 0); transform: translate(-1px, 2px); }
-    70% { clip-path: inset(40% 0 40% 0); transform: translate(1px, 1px); }
-    80% { clip-path: inset(60% 0 20% 0); transform: translate(-2px, -2px); }
-    90% { clip-path: inset(80% 0 0 0); transform: translate(2px, 2px); }
-    100% { clip-path: inset(0 0 80% 0); transform: translate(-2px, 2px); }
+@keyframes glitch {
+  0% {
+    clip-path: inset(0 0 80% 0);
+    transform: translate(-2px, 2px);
   }
 
-  .glitch {
-    animation: glitch 0.6s ease-in-out;
+  10% {
+    clip-path: inset(20% 0 60% 0);
+    transform: translate(2px, -2px);
+  }
+
+  20% {
+    clip-path: inset(40% 0 40% 0);
+    transform: translate(-1px, 1px);
+  }
+
+  30% {
+    clip-path: inset(60% 0 20% 0);
+    transform: translate(1px, -1px);
+  }
+
+  40% {
+    clip-path: inset(80% 0 0 0);
+    transform: translate(-2px, 2px);
+  }
+
+  50% {
+    clip-path: inset(0 0 80% 0);
+    transform: translate(2px, -1px);
+  }
+
+  60% {
+    clip-path: inset(20% 0 60% 0);
+    transform: translate(-1px, 2px);
+  }
+
+  70% {
+    clip-path: inset(40% 0 40% 0);
+    transform: translate(1px, 1px);
+  }
+
+  80% {
+    clip-path: inset(60% 0 20% 0);
+    transform: translate(-2px, -2px);
+  }
+
+  90% {
+    clip-path: inset(80% 0 0 0);
+    transform: translate(2px, 2px);
+  }
+
+  100% {
+    clip-path: inset(0 0 80% 0);
+    transform: translate(-2px, 2px);
   }
 }
 
+.glitch {
+  animation: glitch 0.6s ease-in-out;
+}
+
 @layer utilities {
-  .animate-delay-100 { animation-delay: 100ms; }
-  .animate-delay-200 { animation-delay: 200ms; }
-  .animate-delay-300 { animation-delay: 300ms; }
-  .animate-delay-400 { animation-delay: 400ms; }
-  .animate-delay-500 { animation-delay: 500ms; }
+  .animate-delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .animate-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .animate-delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .animate-delay-400 {
+    animation-delay: 400ms;
+  }
+
+  .animate-delay-500 {
+    animation-delay: 500ms;
+  }
 }

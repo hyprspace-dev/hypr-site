@@ -1,0 +1,192 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GlassCard from '../components/GlassCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Reveal from '../components/Reveal.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+
+const team = [
+  {
+    name: 'Core Team',
+    role: 'Architecture & Hyprland Configuration',
+    description: 'The architects behind HyprSpaceOS, crafting every animation curve, window rule, and system optimization.',
+  },
+  {
+    name: 'Community Contributors',
+    role: 'Packages, Themes & Extensions',
+    description: 'Passionate developers maintaining packages, themes, and tools that make HyprSpaceOS feel cohesive.',
+  },
+  {
+    name: 'Design & UX',
+    role: 'Visual Language & User Experience',
+    description: 'Ensuring every pixel, animation, and interaction serves a purpose. Nothing is accidental.',
+  },
+  {
+    name: 'Documentation Team',
+    role: 'Guides, Troubleshooting & Support',
+    description: 'Making Arch and Hyprland accessible. Our docs turn complexity into clarity.',
+  },
+];
+---
+
+<BaseLayout title="About HyprSpaceOS" description="Why we built HyprSpaceOS and the team behind it.">
+  <!-- Hero Section -->
+  <section class="py-32 px-6 relative">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,212,255,0.05)_0%,transparent_70%)]" />
+    <div class="max-w-4xl mx-auto relative z-10 text-center">
+      <Reveal>
+        <h1 class="text-5xl md:text-6xl font-bold mb-6 gradient-text">
+          Why HyprSpaceOS?
+        </h1>
+        <p class="text-lg text-text-secondary leading-relaxed">
+          A Linux experience that respects your time, your setup, and your pixels.
+        </p>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- Origin Story -->
+  <section class="py-24 px-6">
+    <div class="max-w-4xl mx-auto">
+      <Reveal>
+        <SectionHeading
+          title="The Problem We Saw"
+          subtitle="Why we started building"
+        />
+      </Reveal>
+
+      <div class="grid md:grid-cols-2 gap-8 mt-12">
+        <Reveal>
+          <GlassCard>
+            <h3 class="text-xl font-bold mb-4 text-accent">Arch is Powerful</h3>
+            <p class="text-text-secondary leading-relaxed">
+              But setting it up takes hours. A 3-hour base install, then another 5 hours configuring Hyprland, theming apps, and tuning performance. The result is magic — but only if you have the expertise and time.
+            </p>
+          </GlassCard>
+        </Reveal>
+
+        <Reveal>
+          <GlassCard>
+            <h3 class="text-xl font-bold mb-4 text-accent-secondary">Hyprland Changed Everything</h3>
+            <p class="text-text-secondary leading-relaxed">
+              It proved that a wayland compositor could be modern, fast, and beautiful. But stock Hyprland needs tuning. Every bezier curve, every animation, every keybind — they're all just defaults. They work, but they don't *feel*.
+            </p>
+          </GlassCard>
+        </Reveal>
+
+        <Reveal>
+          <GlassCard>
+            <h3 class="text-xl font-bold mb-4 text-accent">Spins Existed, But...</h3>
+            <p class="text-text-secondary leading-relaxed">
+              Most Arch spins are just a different package selection. HyprSpaceOS is different. We didn't just pick packages — we configured them. We tuned them. We made them work together like they were designed for each other.
+            </p>
+          </GlassCard>
+        </Reveal>
+
+        <Reveal>
+          <GlassCard>
+            <h3 class="text-xl font-bold mb-4 text-accent-secondary">You Deserve Better</h3>
+            <p class="text-text-secondary leading-relaxed">
+              So we built HyprSpaceOS: Arch Linux with Hyprland pre-configured, hand-tuned, and *ready*. Not locked in. You can change anything. But you don't have to waste weeks doing it.
+            </p>
+          </GlassCard>
+        </Reveal>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Statement -->
+  <section class="py-24 px-6 relative">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,212,255,0.03)_0%,transparent_60%)]" />
+    <div class="max-w-4xl mx-auto relative z-10">
+      <Reveal>
+        <div class="glass-strong rounded-2xl p-8 md:p-12 border border-accent/10">
+          <h2 class="text-3xl font-bold mb-6 gradient-text">Our Mission</h2>
+          <p class="text-lg text-text-secondary leading-relaxed mb-4">
+            To deliver a Linux experience that's production-ready out of the box while remaining fully customizable. To prove that a distribution can be opinionated *and* flexible. To show that attention to detail — from kernel tuning to animation curves — matters.
+          </p>
+          <p class="text-lg text-text-secondary leading-relaxed">
+            HyprSpaceOS is not a distro for everyone. It's a distro for people who want Arch's power but don't want to spend weeks assembling it. It's for those who believe that smooth animations and fast boot times aren't luxuries — they're baseline expectations.
+          </p>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- The Team -->
+  <section class="py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <Reveal>
+        <SectionHeading
+          title="Meet the Team"
+          subtitle="The people building HyprSpaceOS"
+        />
+      </Reveal>
+
+      <div class="grid md:grid-cols-2 gap-8 mt-12">
+        {team.map((member) => (
+          <Reveal>
+            <GlassCard>
+              <h3 class="text-xl font-bold mb-2 gradient-text">{member.name}</h3>
+              <p class="text-accent text-sm font-semibold mb-3">{member.role}</p>
+              <p class="text-text-secondary leading-relaxed">{member.description}</p>
+            </GlassCard>
+          </Reveal>
+        ))}
+      </div>
+
+      <Reveal>
+        <div class="mt-12 glass-strong rounded-2xl p-8 text-center border border-accent/10">
+          <p class="text-text-secondary mb-4">
+            HyprSpaceOS is built by the community, for the community. If you're interested in contributing, we'd love to have you.
+          </p>
+          <p class="text-sm text-text-secondary/50">
+            Check out our docs and GitHub for contribution guidelines.
+          </p>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="py-24 px-6">
+    <div class="max-w-4xl mx-auto">
+      <Reveal>
+        <SectionHeading
+          title="What We Value"
+          subtitle="The principles that guide every decision"
+        />
+      </Reveal>
+
+      <div class="grid md:grid-cols-3 gap-6 mt-12">
+        <Reveal>
+          <div class="glass-strong rounded-xl p-6">
+            <h3 class="text-lg font-bold mb-3 text-accent">Performance Matters</h3>
+            <p class="text-text-secondary text-sm leading-relaxed">
+              Every ms counts. From boot time to window animations, we measure and optimize.
+            </p>
+          </div>
+        </Reveal>
+
+        <Reveal>
+          <div class="glass-strong rounded-xl p-6">
+            <h3 class="text-lg font-bold mb-3 text-accent-secondary">Details > Defaults</h3>
+            <p class="text-text-secondary text-sm leading-relaxed">
+              Stock configurations are the starting point, not the finish line. We configure with intention.
+            </p>
+          </div>
+        </Reveal>
+
+        <Reveal>
+          <div class="glass-strong rounded-xl p-6">
+            <h3 class="text-lg font-bold mb-3 text-accent">Freedom First</h3>
+            <p class="text-text-secondary text-sm leading-relaxed">
+              You own your system. Change anything. Our defaults are suggestions, not restrictions.
+            </p>
+          </div>
+        </Reveal>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

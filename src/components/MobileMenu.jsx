@@ -7,8 +7,9 @@ export default function MobileMenu({ links, base }) {
     <div class="md:hidden">
       <button
         onClick={() => setOpen(!open)}
-        class="text-text-primary p-2"
-        aria-label="Toggle menu"
+        class="text-text-primary p-2 focus:outline-2 focus:outline-offset-2 rounded transition-all"
+        aria-label="Toggle navigation menu"
+        aria-expanded={open}
       >
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           {open ? (
@@ -20,11 +21,11 @@ export default function MobileMenu({ links, base }) {
       </button>
 
       {open && (
-        <div class="fixed inset-0 top-16 z-40 glass-strong flex flex-col items-center justify-center gap-8">
+        <div class="fixed left-0 right-0 top-16 bottom-0 z-40 glass-strong flex flex-col items-center justify-start gap-8 pt-12 pb-12 overflow-y-auto">
           {links.map((link) => (
             <a
               href={link.href}
-              class="text-text-primary text-2xl font-medium hover:text-accent-cyan transition-colors"
+              class="text-text-primary text-xl font-medium hover:text-accent transition-colors focus:outline-2 focus:outline-offset-2 rounded px-4 py-2"
               onClick={() => setOpen(false)}
             >
               {link.label}
@@ -32,7 +33,7 @@ export default function MobileMenu({ links, base }) {
           ))}
           <a
             href={`${base}downloads`}
-            class="accent-gradient-bg text-white px-6 py-3 rounded-full text-lg font-semibold"
+            class="accent-gradient-bg text-white px-6 py-3 rounded-full text-lg font-semibold focus:outline-2 focus:outline-offset-2 transition-all"
             onClick={() => setOpen(false)}
           >
             Download
