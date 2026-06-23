@@ -5,12 +5,43 @@
 @layer base {
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
+  :root {
+    --accent-h: 190;
+    --accent-s: 100%;
+    --accent-l: 50%;
+    --accent: hsl(var(--accent-h), var(--accent-s), var(--accent-l));
+    --accent-secondary-h: 260;
+    --accent-secondary-s: 80%;
+    --accent-secondary-l: 60%;
+    --accent-secondary: hsl(var(--accent-secondary-h), var(--accent-secondary-s), var(--accent-secondary-l));
+  }
+
   html {
     scroll-behavior: smooth;
   }
 
   body {
     @apply bg-bg-dark text-text-primary font-sans antialiased;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #07070d; }
+  ::-webkit-scrollbar-thumb { background: hsl(var(--accent-h), var(--accent-s), var(--accent-l), 0.2); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--accent-h), var(--accent-s), var(--accent-l), 0.4); }
+
+  ::selection { background: hsl(var(--accent-h), var(--accent-s), var(--accent-l), 0.3); }
+
+  *:focus-visible {
+    outline: 2px solid hsl(var(--accent-h), var(--accent-s), var(--accent-l));
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
@@ -31,7 +62,7 @@
     background: rgba(255, 255, 255, 0.07);
     border-color: rgba(255, 255, 255, 0.15);
     transform: translateY(-4px);
-    box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+    box-shadow: 0 8px 32px hsl(var(--accent-h), var(--accent-s), var(--accent-l), 0.1);
   }
 
   .glass-strong {
@@ -43,31 +74,54 @@
   }
 
   .gradient-text {
-    background: linear-gradient(135deg, #00d4ff, #a78bfa);
+    background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .accent-gradient-bg {
-    background: linear-gradient(135deg, #00d4ff, #a78bfa);
+    background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+  }
+
+  .scanlines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.06) 2px,
+      rgba(0, 0, 0, 0.06) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  @keyframes glitch {
+    0% { clip-path: inset(0 0 80% 0); transform: translate(-2px, 2px); }
+    10% { clip-path: inset(20% 0 60% 0); transform: translate(2px, -2px); }
+    20% { clip-path: inset(40% 0 40% 0); transform: translate(-1px, 1px); }
+    30% { clip-path: inset(60% 0 20% 0); transform: translate(1px, -1px); }
+    40% { clip-path: inset(80% 0 0 0); transform: translate(-2px, 2px); }
+    50% { clip-path: inset(0 0 80% 0); transform: translate(2px, -1px); }
+    60% { clip-path: inset(20% 0 60% 0); transform: translate(-1px, 2px); }
+    70% { clip-path: inset(40% 0 40% 0); transform: translate(1px, 1px); }
+    80% { clip-path: inset(60% 0 20% 0); transform: translate(-2px, -2px); }
+    90% { clip-path: inset(80% 0 0 0); transform: translate(2px, 2px); }
+    100% { clip-path: inset(0 0 80% 0); transform: translate(-2px, 2px); }
+  }
+
+  .glitch {
+    animation: glitch 0.6s ease-in-out;
   }
 }
 
 @layer utilities {
-  .animate-delay-100 {
-    animation-delay: 100ms;
-  }
-  .animate-delay-200 {
-    animation-delay: 200ms;
-  }
-  .animate-delay-300 {
-    animation-delay: 300ms;
-  }
-  .animate-delay-400 {
-    animation-delay: 400ms;
-  }
-  .animate-delay-500 {
-    animation-delay: 500ms;
-  }
+  .animate-delay-100 { animation-delay: 100ms; }
+  .animate-delay-200 { animation-delay: 200ms; }
+  .animate-delay-300 { animation-delay: 300ms; }
+  .animate-delay-400 { animation-delay: 400ms; }
+  .animate-delay-500 { animation-delay: 500ms; }
 }

@@ -7,8 +7,10 @@ export default {
         'bg-dark': '#07070d',
         'bg-card': 'rgba(255, 255, 255, 0.04)',
         'glass-border': 'rgba(255, 255, 255, 0.08)',
-        'accent-cyan': '#00d4ff',
-        'accent-purple': '#a78bfa',
+        'accent-cyan': 'hsl(var(--accent-h) var(--accent-s) var(--accent-l))',
+        'accent-purple': 'hsl(var(--accent-secondary-h) var(--accent-secondary-s) var(--accent-secondary-l))',
+        'accent': 'hsl(var(--accent-h) var(--accent-s) var(--accent-l))',
+        'accent-secondary': 'hsl(var(--accent-secondary-h) var(--accent-secondary-s) var(--accent-secondary-l))',
         'text-primary': '#f0f0f5',
         'text-secondary': '#8888a0',
       },
@@ -20,7 +22,7 @@ export default {
         glass: '16px',
       },
       backgroundImage: {
-        'accent-gradient': 'linear-gradient(135deg, #00d4ff, #a78bfa)',
+        'accent-gradient': 'linear-gradient(135deg, var(--accent), var(--accent-secondary))',
       },
       animation: {
         'gradient-sweep': 'gradient-sweep 8s ease infinite',

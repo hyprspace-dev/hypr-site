@@ -4,7 +4,7 @@ const editions = [
   {
     id: 'full',
     label: 'Full',
-    desc: 'Complete desktop experience with curated apps, themes, and tools pre-installed.',
+    desc: 'Everything. Kitty, waybar, rofi, dunst, themes, wallpapers, and every tuning we made. Boot and go.',
     size: '3.2 GB',
     filename: 'HyprSpaceOS-Full-2026.06.iso',
     sha256: 'a3f8b2c1d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0',
@@ -12,7 +12,7 @@ const editions = [
   {
     id: 'minimal',
     label: 'Minimal',
-    desc: 'Bare essentials — just Hyprland, Arch base, and a terminal. Build your own stack.',
+    desc: 'Hyprland, Arch base, terminal, and network manager. Everything else is one `pacman -S` away.',
     size: '1.1 GB',
     filename: 'HyprSpaceOS-Minimal-2026.06.iso',
     sha256: 'b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5',
@@ -20,7 +20,7 @@ const editions = [
   {
     id: 'rolling',
     label: 'Rolling',
-    desc: 'Latest packages, updated weekly. For users who want the bleeding edge.',
+    desc: 'The same as Full, but updated weekly with the latest upstream packages. For people who live on the edge.',
     size: '2.8 GB',
     filename: 'HyprSpaceOS-Rolling-2026.06.iso',
     sha256: 'c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6',
