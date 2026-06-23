@@ -1,6 +1,5 @@
 ---
 import '../styles/global.css';
-import { ViewTransitions } from 'astro:transitions';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 
@@ -34,10 +33,8 @@ const site = 'https://hyprspace-dev.github.io/hypr-site';
     <meta property="og:description" content={description} />
     <meta property="og:image" content={`${site}${image}`} />
     <meta name="twitter:card" content="summary_large_image" />
-
-    <ViewTransitions />
   </head>
-  <body class="min-h-screen flex flex-col" data-astro-transition-scroll="auto">
+  <body class="min-h-screen flex flex-col">
     <Navbar />
     <main class="flex-1">
       <slot />
