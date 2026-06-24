@@ -21,7 +21,7 @@ export default function MobileMenu({ links, base }) {
       </button>
 
       {open && (
-        <div class="fixed left-0 right-0 top-28 bottom-0 z-40 glass-strong flex flex-col items-center justify-start gap-8 pt-12 pb-12 overflow-y-auto">
+        <div class="fixed left-0 right-0 top-16 bottom-0 z-40 glass-strong flex flex-col items-center justify-start gap-8 pt-12 pb-12 overflow-y-auto">
           {links.map((link) => (
             <a
               href={link.href}
